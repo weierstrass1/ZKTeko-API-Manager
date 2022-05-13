@@ -1,0 +1,12 @@
+{
+  "DBServerName": "Asista_R",
+  "DBServerIP": "161.97.107.254",
+  "DBUsername": "sa",
+  "DBPassword": "SQL223637.",
+  "APIUrl": "https://app.ctrlit.cl/ctrl/api/zkteco/vALwQdYPL9?",
+  "APISuccessMessage": "Exito",
+  "APIDuplicateMessage": "duplicado",
+  "Days": 0,
+  "ReSendStatus": "Reenviado"
+}
+  
