@@ -50,14 +50,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HTTPRequestUtils\HTTPRequestUtils.csproj">
-      <Project>{436c2a1f-e07e-4745-96a4-d400beebf02b}</Project>
-      <Name>HTTPRequestUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SQLUtils\SQLUtils.csproj">
-      <Project>{0bfacc87-c4ca-4033-badf-361df7fdd17c}</Project>
-      <Name>SQLUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZKTekoLibrary\ZKTekoLibrary.csproj">
       <Project>{aa1e1b49-0335-480b-9bfb-7127c10cfc7b}</Project>
       <Name>ZKTekoLibrary</Name>

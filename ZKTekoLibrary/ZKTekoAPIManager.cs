@@ -57,19 +57,24 @@ namespace ZKTekoLibrary
                 }
                 i++;
             }
-            Console.WriteLine("Proceso Finalizado - Presione Enter para continuar.");
+            
             string log = "Se ha completado el proceso\n" +
                             $"Exitos: {exitos}\n" +
                             $"Duplicados: {duplicado}\n" +
                             $"Errores: {errores}\n" +
                             $"Total: {regs.Count}";
+            Console.WriteLine(log);
+            Console.WriteLine("Proceso Finalizado - Presione Enter para continuar.");
 
-            sb.AppendLine(log);
+            if (Settings.PrintLogs)
+            {
+                sb.AppendLine(log);
+                if (!Directory.Exists("logs"))
+                    Directory.CreateDirectory("logs");
 
-            if (!Directory.Exists("logs"))
-                Directory.CreateDirectory("logs");
 
-            File.WriteAllText($"logs/log_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.txt", sb.ToString());
+                File.WriteAllText($"logs/log_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.txt", sb.ToString());
+            }
         }
         public static RespuestaEnvio EnviarRegistro(Registro reg)
         {

@@ -38,7 +38,7 @@ namespace ZKTekoLibrary.DAO
 
             string FiveDaysAgoString = FiveDaysAgo.ToString("yyyy-MM-dd 00:00:00");
 
-            string query = $"select {ID_COLUMN_NAME}, {PERSON_ID_COLUMN_NAME}, {SERIAL_NUMBER_COLUMN_NAME}, {DATE_COLUMN_NAME}, {TYPE_COLUMN_NAME}, {STATUS_COLUMN_NAME} from {TABLE_NAME} where DATEDIFF(DAY, '{FiveDaysAgoString}',{DATE_COLUMN_NAME}) >= 0 and {STATUS_COLUMN_NAME} like 'The remote server returned an error%' order by {DATE_COLUMN_NAME} asc";
+            string query = $"select {ID_COLUMN_NAME}, {PERSON_ID_COLUMN_NAME}, {SERIAL_NUMBER_COLUMN_NAME}, {DATE_COLUMN_NAME}, {TYPE_COLUMN_NAME}, {STATUS_COLUMN_NAME} from {TABLE_NAME} where DATEDIFF(DAY, '{FiveDaysAgoString}',{DATE_COLUMN_NAME}) >= 0 and {STATUS_COLUMN_NAME} not in {Settings.DBIgnoreStatus} order by {DATE_COLUMN_NAME} asc";
 
             DataTable dt = ZKTekoAPIManager.sqlmanager.DoQuery(query);
 

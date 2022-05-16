@@ -16,6 +16,8 @@ namespace ZKTekoLibrary.DAO
         public static string ReSendStatusText { get => instance.ReSendStatus; }
         public static string APISuccessStatus { get => instance.APISuccessMessage; }
         public static string APIDuplicateStatus { get => instance.APIDuplicateMessage; }
+        public static string DBIgnoreStatus { get => instance.DBIgnoreMessages; }
+        public static bool PrintLogs { get => instance.SendLog; }
 
         public string DBServerName;
         public string DBServerIP;
@@ -26,6 +28,8 @@ namespace ZKTekoLibrary.DAO
         public string ReSendStatus;
         public string APISuccessMessage;
         public string APIDuplicateMessage;
+        public bool SendLog;
+        public string DBIgnoreMessages;
 
         private static Settings instance
         {

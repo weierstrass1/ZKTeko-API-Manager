@@ -6,7 +6,9 @@
   "APIUrl": "https://app.ctrlit.cl/ctrl/api/zkteco/vALwQdYPL9?",
   "APISuccessMessage": "Exito",
   "APIDuplicateMessage": "duplicado",
+  "DBIgnoreMessages": "('Exito','duplicado','Reenviado')",
   "Days": 0,
-  "ReSendStatus": "Reenviado"
+  "ReSendStatus": "Reenviado",
+  "SendLog": false
 }
   
