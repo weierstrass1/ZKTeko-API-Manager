@@ -80,6 +80,8 @@ namespace ZKTekoLibrary
 
             if (result.Trim().Equals(Settings.APISuccessStatus))
                 Registro.UpdateStatus(reg, Settings.ReSendStatusText);
+            else
+                Registro.UpdateStatus(reg, result);
 
             if (result.Trim().Equals(Settings.APISuccessStatus))
             {
