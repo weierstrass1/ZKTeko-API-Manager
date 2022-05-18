@@ -19,7 +19,7 @@ namespace ZKTekoLibrary.DAO
         public string IDPersona { get; private set; }
         public string NumeroSerial { get; private set; }
         public string Tipo { get; private set; }
-        public string Estado { get; private set; }
+        public string Estado { get; internal set; }
         public string Fecha { get; private set; }
         public string Hora { get; private set; }
 

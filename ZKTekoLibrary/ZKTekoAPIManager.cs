@@ -62,7 +62,7 @@ namespace ZKTekoLibrary
 
             if (Settings.PrintLogs)
             {
-                sb.AppendLine(log);
+                sb.Append(log);
                 if (!Directory.Exists("logs"))
                     Directory.CreateDirectory("logs");
 
@@ -75,6 +75,8 @@ namespace ZKTekoLibrary
             string uri = $"{Settings.APIURL}serial={reg.NumeroSerial}&rut={reg.IDPersona}&i={reg.Tipo}&fecha={reg.Fecha}&hora={reg.Hora}";
 
             string result = HTTPRequest.Get(uri);
+
+            reg.Estado = result;
 
             if (result.Trim().Equals(Settings.APISuccessStatus))
                 Registro.UpdateStatus(reg, Settings.ReSendStatusText);
