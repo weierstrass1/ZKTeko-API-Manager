@@ -28,7 +28,6 @@ namespace ZKTekoLibrary
 
             int i = 0;
             int errores = 0;
-            int duplicado = 0;
             int exitos = 0;
             RespuestaEnvio res;
 
@@ -42,10 +41,6 @@ namespace ZKTekoLibrary
 
                 switch(res)
                 {
-                    case RespuestaEnvio.Duplicado:
-                        sb.AppendLine($"{reg} - {Settings.APIDuplicateStatus}");
-                        duplicado++;
-                        break;
                     case RespuestaEnvio.Exito:
                         sb.AppendLine($"{reg} - {Settings.APISuccessStatus}");
                         exitos++;
@@ -60,7 +55,6 @@ namespace ZKTekoLibrary
             
             string log = "Se ha completado el proceso\n" +
                             $"Exitos: {exitos}\n" +
-                            $"Duplicados: {duplicado}\n" +
                             $"Errores: {errores}\n" +
                             $"Total: {regs.Count}";
             Console.WriteLine(log);
@@ -82,16 +76,12 @@ namespace ZKTekoLibrary
 
             string result = HTTPRequest.Get(uri);
 
-            if (result.Trim().Equals(Settings.APISuccessStatus) || result.Trim().Equals(Settings.APIDuplicateStatus))
+            if (result.Trim().Equals(Settings.APISuccessStatus))
                 Registro.UpdateStatus(reg, Settings.ReSendStatusText);
 
             if (result.Trim().Equals(Settings.APISuccessStatus))
             {
                 return RespuestaEnvio.Exito;
-            }
-            else if (result.Trim().Equals(Settings.APIDuplicateStatus))
-            {
-                return RespuestaEnvio.Duplicado;
             }
             return RespuestaEnvio.Error;
         }

@@ -15,7 +15,6 @@ namespace ZKTekoLibrary.DAO
         public static string APIURL { get => instance.APIUrl; }
         public static string ReSendStatusText { get => instance.ReSendStatus; }
         public static string APISuccessStatus { get => instance.APISuccessMessage; }
-        public static string APIDuplicateStatus { get => instance.APIDuplicateMessage; }
         public static string DBIgnoreStatus { get => instance.DBIgnoreMessages; }
         public static bool PrintLogs { get => instance.SendLog; }
 
@@ -27,7 +26,6 @@ namespace ZKTekoLibrary.DAO
         public int Days;
         public string ReSendStatus;
         public string APISuccessMessage;
-        public string APIDuplicateMessage;
         public bool SendLog;
         public string DBIgnoreMessages;
 
