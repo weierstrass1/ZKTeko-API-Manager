@@ -61,7 +61,7 @@ namespace ZKTekoLibrary
         {
             List<Registro> regs = Registro.GetAll();
 
-            EnviarRegistros(regs);
+             EnviarRegistros(regs);
         }
         public static void EnviarRegistros(List<Registro> regs)
         {
@@ -139,12 +139,16 @@ namespace ZKTekoLibrary
 
             string result = HTTPRequest.Get(uri);
 
+            string prevEstado = reg.Estado;
             reg.Estado = result;
 
-            if (Settings.ReSend && result.Trim().Equals(Settings.APISuccessStatus))
-                Registro.UpdateStatus(reg, Settings.ReSendStatusText);
-            else
-                Registro.UpdateStatus(reg, result);
+            if (!prevEstado.Equals(Settings.APISuccessStatus))
+            {
+                if (prevEstado != null && prevEstado != "" && result.Trim().Equals(Settings.APISuccessStatus))
+                    Registro.UpdateStatus(reg, Settings.ReSendStatusText);
+                else
+                    Registro.UpdateStatus(reg, result);
+            }
 
             if (result.Trim().Equals(Settings.APISuccessStatus))
             {

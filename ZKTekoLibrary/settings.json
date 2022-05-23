@@ -14,6 +14,9 @@
   "DateRange": null,
   //"DateRange": [ "2022-05-18T00:00:00", "2022-05-19T00:00:00" ],
   "ReSendStatus": "Reenviado",
-  "SendLog": false
+  "SendLog": false,
+  "Ignore": true,
+  "OnlySerialsInList": true,
+  "OnlyNewRegs": false
 }
   
