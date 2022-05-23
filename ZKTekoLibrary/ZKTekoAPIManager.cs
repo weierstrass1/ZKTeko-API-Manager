@@ -21,22 +21,86 @@ namespace ZKTekoLibrary
         {
 
         }
+        public static void GetPlatformHourProcess()
+        {
+            StringBuilder sb = new StringBuilder();
+            DateTime platformHour = GetPlatformHour();
 
+            sb.AppendLine($"La hora de la plataforma es: {platformHour:dd/MM/yyyy HH:mm:ss}");
+            sb.AppendLine($"La hora del servidor es: {DateTime.UtcNow:dd/MM/yyyy HH:mm:ss}");
+            Console.Write(sb);
+            if (Settings.PrintLogs)
+            {
+                if (!Directory.Exists("logs"))
+                    Directory.CreateDirectory("logs");
+                File.WriteAllText($"logs/log_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.txt", sb.ToString());
+            }
+            Console.WriteLine("Proceso Finalizado - Presione Enter para continuar.");
+        }
+        public static DateTime GetPlatformHour()
+        {
+            string uri = $"{Settings.APIURLHour}";
+
+            string result = HTTPRequest.Get(uri);
+
+            long millis = long.Parse(result);
+
+            DateTime d = new DateTime(1970, 1, 1, 0, 0, 0);
+
+            d = d.AddMilliseconds(millis);
+
+            return d;
+        }
+        public static void EnviarRegistrosIgnorandoEstados()
+        {
+            List<Registro> regs = Registro.GetAllWithIgnore();
+
+            EnviarRegistros(regs);
+        }
         public static void EnviarRegistros()
         {
             List<Registro> regs = Registro.GetAll();
 
-            int i = 0;
+            EnviarRegistros(regs);
+        }
+        public static void EnviarRegistros(List<Registro> regs)
+        {
+            DateTime platformHour = GetPlatformHour();
+            DateTime now = DateTime.UtcNow;
+
+            TimeSpan diff = now - platformHour;
+
+            StringBuilder sb = new StringBuilder();
+
+            if (Math.Abs(diff.TotalMilliseconds) > Settings.MaxDiffTimeAllowed)
+            {
+                //3600000 = 1 hora
+                float horas = diff.Milliseconds / 3600000f;
+                Registro.UpdateHourDiff(regs, $"{diff.Milliseconds/3600000}");
+                sb.AppendLine($"Se encontro que la diferencia de horas era de: {horas}");
+                sb.AppendLine($"Hora del servidor: {now:HH:mm:ss}");
+                sb.AppendLine($"Hora de la plataforma: {platformHour:HH:mm:ss}");
+                Console.Write(sb);
+                Console.WriteLine("Proceso Finalizado - Presione Enter para continuar.");
+
+                if (Settings.PrintLogs)
+                {
+                    if (!Directory.Exists("logs"))
+                        Directory.CreateDirectory("logs");
+                    File.WriteAllText($"logs/log_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.txt", sb.ToString());
+                }
+                return;
+            }
+
+            int i = 1;
             int errores = 0;
             int exitos = 0;
             RespuestaEnvio res;
 
-            StringBuilder sb = new StringBuilder();
-
             foreach(Registro reg in regs)
             {
                 Console.Clear();
-                Console.WriteLine($"Enviando {i}/{regs.Count-1}");
+                Console.WriteLine($"Enviando {i}/{regs.Count}");
                 res = EnviarRegistro(reg);
 
                 switch(res)
@@ -72,7 +136,7 @@ namespace ZKTekoLibrary
         }
         public static RespuestaEnvio EnviarRegistro(Registro reg)
         {
-            string uri = $"{Settings.APIURL}serial={reg.NumeroSerial}&rut={reg.IDPersona}&i={reg.Tipo}&fecha={reg.Fecha}&hora={reg.Hora}";
+            string uri = $"{Settings.APIURLReSend}serial={reg.NumeroSerial}&rut={reg.IDPersona}&i={reg.Tipo}&fecha={reg.Fecha}&hora={reg.Hora}";
 
             string result = HTTPRequest.Get(uri);
 

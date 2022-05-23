@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 
 namespace ZKTekoLibrary.DAO
 {
@@ -14,6 +15,7 @@ namespace ZKTekoLibrary.DAO
         public const string DATE_COLUMN_NAME = "checktime";
         public const string TYPE_COLUMN_NAME = "checktype";
         public const string STATUS_COLUMN_NAME = "Respuesta";
+        public const string HOUR_DIFF_COLUMN_NAME = "hourdiff";
 
         public long ID { get; private set; }
         public string IDPersona { get; private set; }
@@ -27,18 +29,69 @@ namespace ZKTekoLibrary.DAO
         {
             string cmd = $"update {TABLE_NAME} set {STATUS_COLUMN_NAME} = '{newStatus}' where {ID_COLUMN_NAME} = {reg.ID}";
 
-            if (ZKTekoAPIManager.sqlmanager.DoCommand(cmd) <= 0)
-                throw new ArgumentException($"{nameof(reg)} doesn't exist in SQL Database");
+            ZKTekoAPIManager.sqlmanager.DoCommand(cmd);
         }
+        public static void UpdateHourDiff(List<Registro> regs, string hourDiff)
+        {
+            if (regs == null || regs.Count <= 0)
+                return;
 
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("(");
+
+            foreach (Registro reg in regs)
+            {
+                sb.Append($"{reg.ID},");
+            }
+
+            sb.Remove(sb.Length - 1, 1);
+            sb.Append(")");
+
+            string cmd = $"update {TABLE_NAME} set {HOUR_DIFF_COLUMN_NAME} = '{hourDiff}' where {ID_COLUMN_NAME} in {sb}";
+            ZKTekoAPIManager.sqlmanager.DoCommand(cmd);
+        }
+        public static List<Registro> GetAllWithIgnore()
+        {
+            string where = getWhere() +
+                $"and { STATUS_COLUMN_NAME} not in { Settings.DBIgnoreStatus} ";
+            return GetAll(where);
+        }
         public static List<Registro> GetAll()
         {
-            DateTime now = DateTime.Now;
-            DateTime FiveDaysAgo = now.AddDays(-Settings.QueryDays);
+            string where = getWhere();
 
-            string FiveDaysAgoString = FiveDaysAgo.ToString("yyyy-MM-dd 00:00:00");
+            return GetAll(where);
+        }
+        private static string getWhere()
+        {          
+            string where;
 
-            string query = $"select {ID_COLUMN_NAME}, {PERSON_ID_COLUMN_NAME}, {SERIAL_NUMBER_COLUMN_NAME}, {DATE_COLUMN_NAME}, {TYPE_COLUMN_NAME}, {STATUS_COLUMN_NAME} from {TABLE_NAME} where DATEDIFF(DAY, '{FiveDaysAgoString}',{DATE_COLUMN_NAME}) >= 0 and {STATUS_COLUMN_NAME} not in {Settings.DBIgnoreStatus} order by {DATE_COLUMN_NAME} asc";
+            if (Settings.QueryDateRange == null || Settings.QueryDateRange.Count < 2)
+            {
+                DateTime now = DateTime.Now;
+                DateTime DaysAgo = now.AddDays(-Settings.QueryDays);
+
+                string DaysAgoString = DaysAgo.ToString("yyyy-MM-dd 00:00:00");
+
+                where = $"where DATEDIFF(DAY, '{DaysAgoString}',{DATE_COLUMN_NAME}) >= 0 ";
+            }
+            else
+            {
+                where = $"where {DATE_COLUMN_NAME} between '{Settings.QueryDateRange[0]}' and '{Settings.QueryDateRange[1]}' ";
+            }
+
+            if(Settings.UseSerialNumberList)
+                where += $"and {SERIAL_NUMBER_COLUMN_NAME} in {Settings.SerialsNumberList} ";
+
+            return where;
+        }
+        public static List<Registro> GetAll(string where)
+        {
+            string query = $"select {ID_COLUMN_NAME}, {PERSON_ID_COLUMN_NAME}, {SERIAL_NUMBER_COLUMN_NAME}, {DATE_COLUMN_NAME}, {TYPE_COLUMN_NAME}, {STATUS_COLUMN_NAME} " +
+                        $"from {TABLE_NAME} "+
+                        $"{where}"+
+                        $"order by {DATE_COLUMN_NAME} asc";
 
             DataTable dt = ZKTekoAPIManager.sqlmanager.DoQuery(query);
 
@@ -56,7 +109,7 @@ namespace ZKTekoLibrary.DAO
                     ID = long.Parse(row[ID_COLUMN_NAME].ToString()),
                     IDPersona = row[PERSON_ID_COLUMN_NAME].ToString().Trim(),
                     NumeroSerial = row[SERIAL_NUMBER_COLUMN_NAME].ToString().Trim(),
-                    Fecha = string.Join("/", recieveFecha[0].Split('-').Reverse()),
+                    Fecha = string.Join("/", recieveFecha[0].Split('-')),
                     Hora = recieveFecha[1].Replace(".000", ""),
                     Estado = row[STATUS_COLUMN_NAME].ToString().Trim(),
                     Tipo = "entrada"

@@ -3,10 +3,16 @@
   "DBServerIP": "161.97.107.254",
   "DBUsername": "sa",
   "DBPassword": "SQL223637.",
-  "APIUrl": "https://app.ctrlit.cl/ctrl/api/zkteco/vALwQdYPL9?",
+  "APIUrlReSend": "https://app.ctrlit.cl/ctrl/api/zkteco/vALwQdYPL9?",
+  "APIUrlHour": "https://app.ctrlit.cl/ctrl/jobs/horaServidorMillis",
   "APISuccessMessage": "Exito",
   "DBIgnoreMessages": "('Exito','duplicado','Reenviado')",
   "Days": 0,
+  "SerialsNumber": "('CJIK220760004')",
+  "MaxDiffTime": 5,
+  //Si DateRange es null, usa Days sino usa Range
+  "DateRange": null,
+  //"DateRange": [ "2022-05-18T00:00:00", "2022-05-19T00:00:00" ],
   "ReSendStatus": "Reenviado",
   "SendLog": false
 }
