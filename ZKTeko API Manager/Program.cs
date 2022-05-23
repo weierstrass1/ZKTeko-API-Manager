@@ -13,9 +13,7 @@ namespace ZKTeko_API_Manager
             if (args != null && args.Length > 0)
                 argsL = new List<string>(args);
 
-            Settings.UseSerialNumberList = argsL.Contains("--serial");
-
-            if (argsL.Contains("--ignore"))
+            if (Settings.IgnoreMessages)
             {
                 Settings.ReSend = true;
                 ZKTekoAPIManager.EnviarRegistrosIgnorandoEstados();

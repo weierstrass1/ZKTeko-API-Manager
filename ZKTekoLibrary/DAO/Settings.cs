@@ -21,8 +21,10 @@ namespace ZKTekoLibrary.DAO
         public static string DBIgnoreStatus { get => instance.DBIgnoreMessages; }
         public static string SerialsNumberList { get => instance.SerialsNumber; }
         public static bool PrintLogs { get => instance.SendLog; }
-        public static bool UseSerialNumberList { get; set; } = false;
+        public static bool UseSerialNumberList { get => instance.OnlySerialsInList; }
         public static bool ReSend { get; set; } = false;
+        public static bool OnlyNewRegisters { get => instance.OnlyNewRegs; }
+        public static bool IgnoreMessages { get => instance.Ignore; }
         public static long MaxDiffTimeAllowed { get => instance.MaxDiffTime*60000; }
 
         public string DBServerName;
@@ -39,6 +41,9 @@ namespace ZKTekoLibrary.DAO
         public List<string> DateRange;
         public string SerialsNumber;
         public long MaxDiffTime;
+        public bool Ignore;
+        public bool OnlySerialsInList;
+        public bool OnlyNewRegs;
 
         private static Settings instance
         {

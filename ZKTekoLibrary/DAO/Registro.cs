@@ -55,7 +55,7 @@ namespace ZKTekoLibrary.DAO
         public static List<Registro> GetAllWithIgnore()
         {
             string where = getWhere() +
-                $"and { STATUS_COLUMN_NAME} not in { Settings.DBIgnoreStatus} ";
+                $"and ({ STATUS_COLUMN_NAME} not in { Settings.DBIgnoreStatus} OR { STATUS_COLUMN_NAME} IS NULL) ";
             return GetAll(where);
         }
         public static List<Registro> GetAll()
@@ -84,7 +84,8 @@ namespace ZKTekoLibrary.DAO
 
             if(Settings.UseSerialNumberList)
                 where += $"and {SERIAL_NUMBER_COLUMN_NAME} in {Settings.SerialsNumberList} ";
-
+            if (Settings.OnlyNewRegisters)
+                where += $"and {STATUS_COLUMN_NAME} IS NULL ";
             return where;
         }
         public static List<Registro> GetAll(string where)
