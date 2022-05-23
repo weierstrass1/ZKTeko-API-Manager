@@ -27,20 +27,20 @@ Incluye un archivo settings.json similar al siguiente:
 }
 ```
   
-*DBServerName: Nombre de la base de datos.
-*DBServerIP: IP de la base de datos.
-*DBUsername: Usuario de la base de datos.
-*DBPassword: Password de la base de datos.
-*APIUrlReSend: Direccion URL de la API de CTRL para recibir registros de la base de datos.
-*APIUrlHour: Direccion URL de la API de CTRL para obtener los millisegundos de la aplicacion de CTRL.
-*APISuccessMessage: Mensaje de exito que debiera recibir desde la API de CTRL.
-*DBIgnoreMessages: Los registros de la base de datos que tengan como respuesta alguno de los mensajes de esta lista, seran ignorados cuando se utilice el comando --ignore.
-*Days: Cantidad de dias para revisar en la base de datos, 0 es el dia actual.
-*SerialsNumber: Numeros seriales de dispositivos que se utilizan para filtrar cuando se usa el comando --serial.
-*MaxDiffTime: Cantidad de tiempo que se considera valido entre la diferencia de la plataforma y el servidor.
-*DateRange: Rango de tiempo que se usa para envio de registros, si es null se utiliza el parametro days, si no es null se utiliza el rango de tiempo.
-*ReSendStatus: Respuesta que se pone en la base de datos al reenviar un mensaje.
-*SendLog: Si es true, se generara un archivo log con informacion de utilidad.
+- DBServerName: Nombre de la base de datos.
+- DBServerIP: IP de la base de datos.
+- DBUsername: Usuario de la base de datos.
+- DBPassword: Password de la base de datos.
+- APIUrlReSend: Direccion URL de la API de CTRL para recibir registros de la base de datos.
+- APIUrlHour: Direccion URL de la API de CTRL para obtener los millisegundos de la aplicacion de CTRL.
+- APISuccessMessage: Mensaje de exito que debiera recibir desde la API de CTRL.
+- DBIgnoreMessages: Los registros de la base de datos que tengan como respuesta alguno de los mensajes de esta lista, seran ignorados cuando se utilice el comando --ignore.
+- Days: Cantidad de dias para revisar en la base de datos, 0 es el dia actual.
+- SerialsNumber: Numeros seriales de dispositivos que se utilizan para filtrar cuando se usa el comando --serial.
+- MaxDiffTime: Cantidad de tiempo que se considera valido entre la diferencia de la plataforma y el servidor.
+- DateRange: Rango de tiempo que se usa para envio de registros, si es null se utiliza el parametro days, si no es null se utiliza el rango de tiempo.
+- ReSendStatus: Respuesta que se pone en la base de datos al reenviar un mensaje.
+- SendLog: Si es true, se generara un archivo log con informacion de utilidad.
 
 ## Opciones
 
