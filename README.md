@@ -44,6 +44,6 @@ Incluye un archivo settings.json similar al siguiente:
 
 ## Opciones
 
-*--ignore : Al usarlo, se filtraran los registros de la base utilizando solo aquellos que no tengan una respuesta incluida en el setting DBIgnoreMessages.
-*--hour: Al usarlo, te dara la hora de la plataforma de CTRL y de el servidor de la DB en UTC.
-*--serial: Al usarlo, se filtraran los registros para que solo sean de dispositivos en la lista del setting SerialsNumber.
+- --ignore : Al usarlo, se filtraran los registros de la base utilizando solo aquellos que no tengan una respuesta incluida en el setting DBIgnoreMessages.
+- --hour: Al usarlo, te dara la hora de la plataforma de CTRL y de el servidor de la DB en UTC.
+- --serial: Al usarlo, se filtraran los registros para que solo sean de dispositivos en la lista del setting SerialsNumber.
