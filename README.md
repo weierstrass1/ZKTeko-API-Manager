@@ -6,7 +6,8 @@ Este proyecto tiene como finalidad el envio de marcas desde la Base de datos de 
 
 Incluye un archivo settings.json similar al siguiente:
 
-```{
+```
+{
   "DBServerName": "*****",
   "DBServerIP": "*****",
   "DBUsername": "*****",
@@ -23,7 +24,8 @@ Incluye un archivo settings.json similar al siguiente:
   //"DateRange": [ "2022-05-18T00:00:00", "2022-05-19T00:00:00" ],
   "ReSendStatus": "Reenviado",
   "SendLog": false
-}```
+}
+```
   
 DBServerName: Nombre de la base de datos.
 DBServerIP: IP de la base de datos.
