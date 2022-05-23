@@ -142,7 +142,7 @@ namespace ZKTekoLibrary
 
             reg.Estado = result;
 
-            if (result.Trim().Equals(Settings.APISuccessStatus))
+            if (Settings.ReSend && result.Trim().Equals(Settings.APISuccessStatus))
                 Registro.UpdateStatus(reg, Settings.ReSendStatusText);
             else
                 Registro.UpdateStatus(reg, result);

@@ -22,6 +22,7 @@ namespace ZKTekoLibrary.DAO
         public static string SerialsNumberList { get => instance.SerialsNumber; }
         public static bool PrintLogs { get => instance.SendLog; }
         public static bool UseSerialNumberList { get; set; } = false;
+        public static bool ReSend { get; set; } = false;
         public static long MaxDiffTimeAllowed { get => instance.MaxDiffTime*60000; }
 
         public string DBServerName;

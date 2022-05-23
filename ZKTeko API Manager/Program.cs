@@ -15,10 +15,13 @@ namespace ZKTeko_API_Manager
 
             Settings.UseSerialNumberList = argsL.Contains("--serial");
 
-            if (argsL.Contains("--hour"))
-                ZKTekoAPIManager.GetPlatformHourProcess();
-            else if(argsL.Contains("--hour"))
+            if (argsL.Contains("--ignore"))
+            {
+                Settings.ReSend = true;
                 ZKTekoAPIManager.EnviarRegistrosIgnorandoEstados();
+            }
+            else if (argsL.Contains("--hour"))
+                ZKTekoAPIManager.GetPlatformHourProcess();
             else
                 ZKTekoAPIManager.EnviarRegistros();
             Console.ReadLine();
