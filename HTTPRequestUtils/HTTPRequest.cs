@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace HTTPRequestUtils
@@ -17,7 +18,9 @@ namespace HTTPRequestUtils
             Uri endpoint = new Uri(url);
 
             HttpResponseMessage result = instance.client.GetAsync(endpoint).Result;
-            string json = result.Content.ReadAsStringAsync().Result;
+            Task<string> task = result.Content.ReadAsStringAsync();
+            task.Wait();
+            string json = task.Result;
 
             return json;
         }
