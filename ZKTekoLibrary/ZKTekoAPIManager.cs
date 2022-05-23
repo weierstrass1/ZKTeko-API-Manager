@@ -5,6 +5,7 @@ using ZKTekoLibrary.DAO;
 using HTTPRequestUtils;
 using SQLUtils;
 using System.IO;
+using System.Threading;
 
 namespace ZKTekoLibrary
 {
@@ -138,6 +139,8 @@ namespace ZKTekoLibrary
             string uri = $"{Settings.APIURLReSend}serial={reg.NumeroSerial}&rut={reg.IDPersona}&i={reg.Tipo}&fecha={reg.Fecha}&hora={reg.Hora}";
 
             string result = HTTPRequest.Get(uri);
+
+            Thread.Sleep(1000);
 
             string prevEstado = reg.Estado;
             reg.Estado = result;
