@@ -65,19 +65,18 @@ namespace ZKTekoLibrary
         }
         public static void EnviarRegistros(List<Registro> regs)
         {
-            DateTime platformHour = GetPlatformHour();
+            StringBuilder sb = new StringBuilder();
+            /*DateTime platformHour = GetPlatformHour();
             DateTime now = DateTime.UtcNow;
 
             TimeSpan diff = now - platformHour;
 
-            StringBuilder sb = new StringBuilder();
-
-            if (Math.Abs(diff.TotalMilliseconds) > Settings.MaxDiffTimeAllowed)
+            if (true)//(Math.Abs(diff.TotalMilliseconds) > Settings.MaxDiffTimeAllowed)
             {
-                //3600000 = 1 hora
-                float horas = diff.Milliseconds / 3600000f;
-                Registro.UpdateHourDiff(regs, $"{diff.Milliseconds/3600000}");
-                sb.AppendLine($"Se encontro que la diferencia de horas era de: {horas}");
+                //60000 = 1 minuto
+                long minutos = (long)Math.Round(diff.Milliseconds / 60000f);
+                Registro.UpdateHourDiff(regs, $"{minutos}");
+                sb.AppendLine($"Se encontro que la diferencia de horas era de: {minutos} minutos");
                 sb.AppendLine($"Hora del servidor: {now:HH:mm:ss}");
                 sb.AppendLine($"Hora de la plataforma: {platformHour:HH:mm:ss}");
                 Console.Write(sb);
@@ -90,7 +89,7 @@ namespace ZKTekoLibrary
                     File.WriteAllText($"logs/log_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.txt", sb.ToString());
                 }
                 return;
-            }
+            }*/
 
             int i = 1;
             int errores = 0;

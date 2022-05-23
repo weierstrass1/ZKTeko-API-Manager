@@ -15,7 +15,7 @@ namespace ZKTekoLibrary.DAO
         public const string DATE_COLUMN_NAME = "checktime";
         public const string TYPE_COLUMN_NAME = "checktype";
         public const string STATUS_COLUMN_NAME = "Respuesta";
-        public const string HOUR_DIFF_COLUMN_NAME = "hourdiff";
+        public const string HOUR_DIFF_COLUMN_NAME = "Respuesta";
 
         public long ID { get; private set; }
         public string IDPersona { get; private set; }
@@ -31,6 +31,7 @@ namespace ZKTekoLibrary.DAO
 
             ZKTekoAPIManager.sqlmanager.DoCommand(cmd);
         }
+        [Obsolete("UpdateHourDiff is deprecated, please don't use it.")]
         public static void UpdateHourDiff(List<Registro> regs, string hourDiff)
         {
             if (regs == null || regs.Count <= 0)
@@ -48,7 +49,7 @@ namespace ZKTekoLibrary.DAO
             sb.Remove(sb.Length - 1, 1);
             sb.Append(")");
 
-            string cmd = $"update {TABLE_NAME} set {HOUR_DIFF_COLUMN_NAME} = '{hourDiff}' where {ID_COLUMN_NAME} in {sb}";
+            string cmd = $"update {TABLE_NAME} set {HOUR_DIFF_COLUMN_NAME} = CONCAT({HOUR_DIFF_COLUMN_NAME},'-Defase:{hourDiff}m') where {ID_COLUMN_NAME} in {sb}";
             ZKTekoAPIManager.sqlmanager.DoCommand(cmd);
         }
         public static List<Registro> GetAllWithIgnore()
