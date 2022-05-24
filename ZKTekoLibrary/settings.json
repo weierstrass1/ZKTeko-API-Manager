@@ -16,7 +16,7 @@
   "ReSendStatus": "Reenviado",
   "SendLog": false,
   "Ignore": true,
-  "OnlySerialsInList": true,
+  "OnlySerialsInList": false,
   "OnlyNewRegs": false
 }
   

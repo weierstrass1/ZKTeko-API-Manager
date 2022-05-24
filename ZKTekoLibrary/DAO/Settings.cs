@@ -26,6 +26,7 @@ namespace ZKTekoLibrary.DAO
         public static bool OnlyNewRegisters { get => instance.OnlyNewRegs; }
         public static bool IgnoreMessages { get => instance.Ignore; }
         public static long MaxDiffTimeAllowed { get => instance.MaxDiffTime*60000; }
+        public static bool OnlyNotNull { get => instance.OnlyNotNewReg; }
 
         public string DBServerName;
         public string DBServerIP;
@@ -44,6 +45,7 @@ namespace ZKTekoLibrary.DAO
         public bool Ignore;
         public bool OnlySerialsInList;
         public bool OnlyNewRegs;
+        public bool OnlyNotNewReg;
 
         private static Settings instance
         {

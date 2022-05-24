@@ -31,27 +31,7 @@ namespace ZKTekoLibrary.DAO
 
             ZKTekoAPIManager.sqlmanager.DoCommand(cmd);
         }
-        [Obsolete("UpdateHourDiff is deprecated, please don't use it.")]
-        public static void UpdateHourDiff(List<Registro> regs, string hourDiff)
-        {
-            if (regs == null || regs.Count <= 0)
-                return;
 
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("(");
-
-            foreach (Registro reg in regs)
-            {
-                sb.Append($"{reg.ID},");
-            }
-
-            sb.Remove(sb.Length - 1, 1);
-            sb.Append(")");
-
-            string cmd = $"update {TABLE_NAME} set {HOUR_DIFF_COLUMN_NAME} = CONCAT({HOUR_DIFF_COLUMN_NAME},'-Defase:{hourDiff}m') where {ID_COLUMN_NAME} in {sb}";
-            ZKTekoAPIManager.sqlmanager.DoCommand(cmd);
-        }
         public static List<Registro> GetAllWithIgnore()
         {
             string where = getWhere() +
@@ -86,11 +66,13 @@ namespace ZKTekoLibrary.DAO
                 where += $"and {SERIAL_NUMBER_COLUMN_NAME} in {Settings.SerialsNumberList} ";
             if (Settings.OnlyNewRegisters)
                 where += $"and {STATUS_COLUMN_NAME} IS NULL ";
+            else if(Settings.OnlyNotNull)
+                where += $"and {STATUS_COLUMN_NAME} IS NOT NULL ";
             return where;
         }
         public static List<Registro> GetAll(string where)
         {
-            string query = $"select {ID_COLUMN_NAME}, {PERSON_ID_COLUMN_NAME}, {SERIAL_NUMBER_COLUMN_NAME}, {DATE_COLUMN_NAME}, {TYPE_COLUMN_NAME}, {STATUS_COLUMN_NAME} " +
+            string query = $"select {ID_COLUMN_NAME}, {PERSON_ID_COLUMN_NAME}, {SERIAL_NUMBER_COLUMN_NAME}, FORMAT ({DATE_COLUMN_NAME} ,'dd/MM/yyyy HH:mm:ss') as {DATE_COLUMN_NAME}, {TYPE_COLUMN_NAME}, {STATUS_COLUMN_NAME} " +
                         $"from {TABLE_NAME} "+
                         $"{where}"+
                         $"order by {DATE_COLUMN_NAME} asc";
@@ -111,7 +93,7 @@ namespace ZKTekoLibrary.DAO
                     ID = long.Parse(row[ID_COLUMN_NAME].ToString()),
                     IDPersona = row[PERSON_ID_COLUMN_NAME].ToString().Trim(),
                     NumeroSerial = row[SERIAL_NUMBER_COLUMN_NAME].ToString().Trim(),
-                    Fecha = string.Join("/", recieveFecha[0].Split('-')),
+                    Fecha = recieveFecha[0],
                     Hora = recieveFecha[1].Replace(".000", ""),
                     Estado = row[STATUS_COLUMN_NAME].ToString().Trim(),
                     Tipo = "entrada"
